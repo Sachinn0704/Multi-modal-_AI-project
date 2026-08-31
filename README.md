@@ -1,44 +1,77 @@
-# Multimodal AI System for Human–AI Interaction
+# Multimodal AI Interaction System
 
-A multimodal AI application that can understand and respond to **text**, **images**, and **speech** inputs.  
-This project demonstrates how to combine **NLP, CNNs, Transformers, and audio processing** into a single system, exposed through a simple Python backend.
+A Python-based multimodal AI project that brings together text, image, and speech processing concepts in a single application workflow.
 
----
+## Project Summary
 
-## 🎯 Project Goals
+The project demonstrates how different input modalities can be routed to appropriate processing components and exposed through one application. The repository currently contains a main application entry point and a dedicated image-processing module.
 
-- Build one system that can handle **multiple input modalities**:
-  - Text (commands, questions)
-  - Images (classification / description)
-  - Speech (voice commands → text)
-- Use appropriate AI models for each modality and **merge their outputs**.
-- Provide a clean code structure that can be extended or deployed as an API or simple app.
+## Main Features
 
----
+- Text input processing
+- Image loading and inference workflow
+- Speech/audio interaction workflow
+- AI model orchestration across modalities
+- Application-level interface through the main Python entry point
 
-## 🧱 Tech Stack
+## Technology Stack
 
-- **Language:** Python  
-- **Core Libraries:**
-  - NLP / Transformers (e.g., Hugging Face Transformers, spaCy, NLTK – depending on your code)
-  - CNNs for images (e.g., TensorFlow / Keras / PyTorch models or OpenCV for preprocessing)
-  - Audio / speech: any ASR library you used (e.g., SpeechRecognition, librosa, etc.)
-- **Data & Utilities:** NumPy, Pandas (if needed), standard Python libs  
-- **App / Orchestration:** `app.py` – main entry point  
-- **Image Utilities:** `image_module.py` – image loading, preprocessing, and inference logic  
-- **Environment:** dependencies listed in `requirements.txt`
+- Python
+- NLP / transformer-based processing concepts
+- CNN / computer-vision processing concepts
+- Audio/speech processing
+- NumPy and other project dependencies listed in `requirements.txt`
 
-> Adjust specific libraries in this README if your `requirements.txt` uses slightly different ones.
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```text
 .
-├── LICENSE              # Project license
-├── README.md            # Project documentation (this file)
-├── app.py               # Main multimodal AI application / entry point
-├── image_module.py      # Image processing and image model inference utilities
-└── requirements.txt     # Python dependencies for the whole project
+├── LICENSE
+├── README.md
+├── app.py
+├── image_module.py
+└── requirements.txt
+```
 
+## How It Works
+
+1. The application receives an input from a supported modality.
+2. The input type is identified.
+3. Text, image, or speech data is routed to the relevant processing logic.
+4. The corresponding AI/model-processing component generates an output.
+5. The application returns or displays the resulting response.
+
+## How to Run
+
+### 1. Install Python
+
+Use a supported Python 3 installation.
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Start the application
+
+```bash
+python app.py
+```
+
+The exact input/output behavior is defined by `app.py` and `image_module.py`.
+
+## Key Learning Outcomes
+
+- Multimodal application design
+- AI model integration
+- Image-processing workflows
+- Separation of application and image-processing logic
+- Python dependency management
+
+## Future Improvements
+
+- Add automated tests for each modality
+- Document exact models and datasets used
+- Add API endpoints for programmatic access
+- Improve error handling for unavailable audio/camera inputs
