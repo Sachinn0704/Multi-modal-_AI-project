@@ -1,31 +1,52 @@
-from utils.image_module import process_image
-from utils.text_module import process_text
-from utils.audio_module import extract_text_from_audio
+from importlib.util import find_spec
 
 
+SUPPORTED_MODULES = {
+    "image": ("image_module", "extract_text_from_image", "Image"),
+    "text": ("utils.text_module", "process_text", "Text"),
+    "audio": ("utils.audio_module", "extract_text_from_audio", "Audio"),
+}
+
+
+def module_available(module_name):
+    """Return whether an optional modality module is available."""
+    return find_spec(module_name) is not None
+
+
+def run_modality(file_type, file_path):
+    """Load the selected modality lazily and return its processing result."""
+    if file_type not in SUPPORTED_MODULES:
+        raise ValueError("Unsupported type. Choose image, text, or audio.")
+
+    module_name, function_name, _ = SUPPORTED_MODULES[file_type]
+    if not module_available(module_name):
+        raise ModuleNotFoundError(
+            f"The {file_type} processing module is not available in this checkout."
+        )
+
+    module = __import__(module_name, fromlist=[function_name])
+    processor = getattr(module, function_name)
+    return processor(file_path)
 
 
 def main():
     print("Select a file (Image, Text, or Audio):")
-    file_type = input().lower()
-    
-    if file_type == 'image':
-        print("Enter the path to the image file:")
-        image_path = input()
-        result = process_image(image_path)
-        print("Image result:", result)
-    
-    elif file_type == 'text':
-        print("Enter the path to the text file:")
-        text_path = input()
-        result = process_text(text_path)
-        print("Text result:", result)
-    
-    elif file_type == 'audio':
-        print("Enter the path to the audio file:")
-        audio_path = input()
-        result = extract_text_from_audio(audio_path)
-        print("Audio result:", result)
+    file_type = input().strip().lower()
+
+    if file_type not in SUPPORTED_MODULES:
+        print("Unsupported type. Please choose image, text, or audio.")
+        return
+
+    display_name = SUPPORTED_MODULES[file_type][2]
+    print(f"Enter the path to the {display_name.lower()} file:")
+    file_path = input().strip()
+
+    try:
+        result = run_modality(file_type, file_path)
+        print(f"{display_name} result:", result)
+    except (FileNotFoundError, ModuleNotFoundError, ValueError) as exc:
+        print("Unable to process the selected file:", exc)
+
 
 if __name__ == "__main__":
     main()
