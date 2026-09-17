@@ -30,7 +30,9 @@ The project demonstrates how different input modalities can be routed to appropr
 ├── README.md
 ├── app.py
 ├── image_module.py
-└── requirements.txt
+├── requirements.txt
+└── tests/
+    └── test_app.py
 ```
 
 ## How It Works
@@ -61,6 +63,16 @@ python app.py
 
 The exact input/output behavior is defined by `app.py` and `image_module.py`.
 
+## Testing
+
+The repository includes lightweight automated tests for the application dispatcher and its error-handling paths. The tests use mocked model components where appropriate, so they can validate application behavior without downloading large AI models.
+
+Run the test suite with:
+
+```bash
+pytest -q
+```
+
 ## Key Learning Outcomes
 
 - Multimodal application design
@@ -68,6 +80,7 @@ The exact input/output behavior is defined by `app.py` and `image_module.py`.
 - Image-processing workflows
 - Separation of application and image-processing logic
 - Python dependency management
+- Testable application interfaces and failure handling
 
 ## Future Improvements
 
