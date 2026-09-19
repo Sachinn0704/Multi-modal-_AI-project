@@ -1,4 +1,5 @@
 from importlib.util import find_spec
+from pathlib import Path
 
 
 SUPPORTED_MODULES = {
@@ -18,6 +19,10 @@ def run_modality(file_type, file_path):
     if file_type not in SUPPORTED_MODULES:
         raise ValueError("Unsupported type. Choose image, text, or audio.")
 
+    path = Path(file_path).expanduser()
+    if not file_path or not path.is_file():
+        raise FileNotFoundError(f"Input file not found: {file_path}")
+
     module_name, function_name, _ = SUPPORTED_MODULES[file_type]
     if not module_available(module_name):
         raise ModuleNotFoundError(
@@ -26,7 +31,7 @@ def run_modality(file_type, file_path):
 
     module = __import__(module_name, fromlist=[function_name])
     processor = getattr(module, function_name)
-    return processor(file_path)
+    return processor(str(path))
 
 
 def main():
