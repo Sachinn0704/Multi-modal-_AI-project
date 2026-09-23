@@ -9,6 +9,10 @@ class AppTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Unsupported type"):
             app.run_modality("video", "sample.mp4")
 
+    def test_run_modality_rejects_missing_file_before_loading_module(self):
+        with self.assertRaisesRegex(FileNotFoundError, "Input file not found"):
+            app.run_modality("image", "does-not-exist.png")
+
     @patch("app.module_available", return_value=False)
     def test_run_modality_reports_missing_optional_module(self, _available):
         with self.assertRaisesRegex(ModuleNotFoundError, "image processing module"):
