@@ -37,11 +37,13 @@ The project demonstrates how different input modalities can be routed to appropr
 
 ## How It Works
 
-1. The application receives an input from a supported modality.
-2. The input type is identified.
-3. Text, image, or speech data is routed to the relevant processing logic.
+1. The application asks which modality should be processed: `image`, `text`, or `audio`.
+2. The selected input file path is validated before the modality processor is loaded.
+3. The input is routed to the relevant processing component.
 4. The corresponding AI/model-processing component generates an output.
-5. The application returns or displays the resulting response.
+5. The application prints the resulting response or a clear processing error.
+
+The dispatcher loads modality modules lazily, so a missing optional processor is reported only when that modality is selected.
 
 ## How to Run
 
@@ -61,7 +63,17 @@ pip install -r requirements.txt
 python app.py
 ```
 
-The exact input/output behavior is defined by `app.py` and `image_module.py`.
+The CLI interaction is:
+
+```text
+Select a file (Image, Text, or Audio):
+image
+Enter the path to the image file:
+/path/to/image.png
+Image result: <extracted result>
+```
+
+Replace `image` with `text` or `audio` when using another supported modality. The selected file must exist, and the corresponding processing module must be available in the checkout.
 
 ## Testing
 
